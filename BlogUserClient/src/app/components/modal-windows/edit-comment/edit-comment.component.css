@@ -1,0 +1,7 @@
+.edit-comment-modal-window {
+}
+
+.edit-comment-modal-window textarea{
+    height: 150px;
+    resize: none;
+}

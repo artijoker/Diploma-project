@@ -1,0 +1,22 @@
+.post-details{
+
+}
+
+.post-title {
+    text-align: center;
+    word-wrap: break-word;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+.like-dislike:hover{
+    background-color: #e0e0e0;
+    color: black;
+}
+
+.post-details textarea{
+    height: 200px;
+    resize: none;
+}

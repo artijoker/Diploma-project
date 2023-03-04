@@ -1,0 +1,48 @@
+<app-main-header></app-main-header>
+<div class="post me-5 ms-5 mt-2 p-3 shadow-lg">
+    <div class=" pe-3 ps-3 pt-4 pb-4">
+
+        <div class="mb-5">
+            <button (click)="goToPostEditor()" class="btn btn-primary me-2">
+                Редактировать
+            </button>
+            <button *ngIf="status === postStatus.Pending" (click)="setPostStatusPublished()"
+                    class="btn btn-primary me-2">
+                Опубликовать
+            </button>
+            <button *ngIf="status === postStatus.Pending" (click)="setPostStatusRejected('Пост отклонен')"
+                    class="btn btn-primary me-2">
+                Отклонить
+            </button>
+            <button class="btn btn-primary me-2"
+                    *ngIf="post?.status === postStatus.Published"
+                    (click)="setPostStatusRejected('Пост снят с публикации')">
+                Снят с публикации
+            </button>
+            <button class="btn btn-secondary"
+                    *ngIf="post?.status !== postStatus.InTrash"
+                    (click)="postSendToTrash()">
+                В корзину
+            </button>
+        </div>
+
+        <div class="post-meta mb-4">Автор:
+            <a class="link-primary" role="button" (click)="goToPostsByAccountId()">{{post?.authorNickname}}</a>
+            <br/>
+            {{post?.lastChange | date}}
+        </div>
+
+        <div class=" mb-4">Категория:
+            <b class="text-success">{{post?.categoryName}}</b>
+        </div>
+
+        <div class="border bg-white">
+            <div class="mb-3">
+                <h2 class="post-title mb-1">{{post?.title}}</h2>
+            </div>
+            <div class="fullText me-3 ms-3 mb-5" [innerHTML]="post?.fullText | safeHtml"></div>
+        </div>
+
+
+    </div>
+</div>

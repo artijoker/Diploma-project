@@ -1,0 +1,48 @@
+<div>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Учентная запись
+        </h5>
+        <button type="button" class="btn-close" (click)="activeModal.close()"></button>
+    </div>
+    <div class="modal-body">
+        <form class="needs-validation" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="g-3">
+                <div class="mb-2">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email"
+                           formControlName="email">
+                </div>
+                <div class="mb-2">
+                    <label for="login" class="form-label">Логин</label>
+                    <input type="text" class="form-control" id="login"
+                           formControlName="login">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="text" class="form-control" id="password"
+                           formControlName="password">
+                </div>
+
+            </div>
+            <div class="form-outline mb-4" *ngIf="roles.length !== 0">
+                <label class="form-label" for="categoryId">Роль</label>
+                <br/>
+                <select class="form-select w-25"
+                        id="categoryId" [(ngModel)]="selectedRole"
+                        (ngModelChange)="onChange($event)"
+                        formControlName="role">
+                    <option *ngFor="let role of roles" [ngValue]="role"> {{role.name}} </option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="">
+            <button class="btn btn-primary me-3" (click)="submit()">Сохранить</button>
+            <button class="btn btn-secondary" (click)="activeModal.close()">Отмена</button>
+        </div>
+    </div>
+
+</div>
+

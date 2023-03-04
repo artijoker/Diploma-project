@@ -1,0 +1,39 @@
+<app-main-header></app-main-header>
+<div>
+    <div class="border-bottom mb-5" *ngIf="categories.length !== 0">
+        <nav class="nav d-flex me-5 ms-5 flex-wrap">
+            <a [ngClass]="{ 'category-active' : linkNumber == 0 }" role="button"
+               (click)="getPosts(); toggle(0)"
+               class="p-2 nav-link link-primary text-dark me-2">
+                Все потоки
+            </a>
+            <a [ngClass]="{ 'category-active' : linkNumber == i + 1 }" role="button"
+               (click)="getPostsByCategory(category); toggle(i + 1)"
+               class="p-2 nav-link link-primary text-dark me-2"
+               *ngFor="let category of categories; let i = index">
+                {{category.name}}
+            </a>
+        </nav>
+
+    </div>
+    <div *ngIf="isPostsLoadComplete === false">
+        <div class="p-5 d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isPostsLoadComplete === true">
+        <div *ngIf="posts.length > 0">
+            <div class="d-flex justify-content-center">
+                <div class="w-75">
+                    <div *ngFor="let post of posts">
+                        <app-post [post]="post"></app-post>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="posts.length === 0" class="d-flex justify-content-center h3">
+            К сожалению, здесь пока нет ни одной поста
+        </div>
+    </div>
+</div>

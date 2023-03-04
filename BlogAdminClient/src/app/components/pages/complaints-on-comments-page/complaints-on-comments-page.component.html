@@ -1,0 +1,61 @@
+<app-main-header></app-main-header>
+<app-complaints-header></app-complaints-header>
+
+<div *ngIf="isComplaintsLoadComplete === false">
+    <div class="p-5 d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+        </div>
+    </div>
+</div>
+<div *ngIf="isComplaintsLoadComplete === true">
+    <div class="me-3 ms-3 p-3">
+        <div *ngIf="complaints.length > 0">
+            <table class="table table-striped border-dark border">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th role="button" (click)="sortAuthor()" class="link-primary text-white" scope="col">От кого</th>
+                    <th class="text-white" scope="col">Жалоба</th>
+                    <th role="button" (click)="sortDate()" class="link-primary text-white" scope="col">Дата</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr title="Открыть комментарий"
+                    role="button"
+                    (click)="openComment(complaint.commentId)"
+                    class="border-dark"
+                    style="vertical-align: middle"
+                    *ngFor="let complaint of complaints; index as i">
+                    <th class="col-1" scope="row">{{i + 1}}</th>
+                    <td class="col-2"><span>{{complaint.accountNickname}}</span></td>
+                    <td class="col-5"><span>{{complaint.text}}</span></td>
+                    <td class="col-1"><span>{{complaint.created | date:'dd.MM.yyyy в HH:mm'}}</span></td>
+                    <td class="col-1">
+                        <div class="d-flex justify-content-center">
+                            <button (click)="$event.stopPropagation(); complaintProcessed(complaint.id)"
+                                    title="Решено"
+                                    class="p-2 me-2 btn btn-outline-success ">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 512 512"
+                                     height="30"
+                                     width="30">
+                                    <path
+                                        d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="complaints.length === 0" class="d-flex justify-content-center h4">
+            Жалоб нет
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>
+
+
+

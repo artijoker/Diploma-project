@@ -1,0 +1,42 @@
+<div class="mt-5 sign-up w-100 m-auto">
+  <form [formGroup]="formSingUp" (ngSubmit)="submit()">
+    <div class="d-flex">
+      <div class="p-2 me-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+          class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+          <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+          <path fill-rule="evenodd"
+            d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+        </svg>
+      </div>
+
+      <h1 class="h4 mb-3 fw-normal">Пожалуйста, зарегистрируйтесь</h1>
+    </div>
+
+
+    <div class="form-floating mb-2">
+      <input type="email" class="form-control" id="email" formControlName="email" placeholder="email" required>
+      <label for="email">Email</label>
+    </div>
+    <div class="form-floating mb-2">
+      <input type="login" class="form-control" id="login" formControlName="login" placeholder="login" required>
+      <label for="login">Логин</label>
+    </div>
+    <div class="form-floating mb-4">
+      <input type="password" class="form-control" id="password" formControlName="password" placeholder="password" required>
+      <label for="password">Пароль</label>
+    </div>
+
+      <div>
+          <button *ngIf="isLoad === false"
+                  class="w-100 btn btn-lg btn-primary"
+                  type="submit">
+              Зарегистрироваться
+          </button>
+          <div *ngIf="isLoad === true"
+               class="p-2 d-flex justify-content-center">
+              <div class="spinner-border" role="status"></div>
+          </div>
+      </div>
+  </form>
+</div>

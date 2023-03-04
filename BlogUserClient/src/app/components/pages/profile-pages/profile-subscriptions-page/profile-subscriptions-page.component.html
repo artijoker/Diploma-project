@@ -1,0 +1,26 @@
+<app-main-header></app-main-header>
+<app-profile-header></app-profile-header>
+<div class="container">
+    <div *ngIf="isSubscriptionsLoadComplete === false; else elseBlock"
+         class="p-5 d-flex justify-content-center">
+        <div class="spinner-border"></div>
+    </div>
+    <ng-template #elseBlock>
+        <div *ngIf="subscriptions.length > 0">
+            <h5 class="mt-3 mb-3 ms-2">Подписки</h5>
+            <div *ngFor="let account of subscriptions">
+                <app-author
+                    (subscribe)="subscribeToAuthor(account)"
+                    (unsubscribe)="unsubscribeFromAuthor(account)"
+                    [author]="account"
+                    [isSubscribedToAuthor]="true">
+                </app-author>
+            </div>
+        </div>
+        <div *ngIf="subscriptions.length === 0" class="d-flex mt-5 justify-content-center h6">
+            У вас нет подписок
+        </div>
+    </ng-template>
+
+
+</div>

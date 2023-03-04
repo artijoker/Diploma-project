@@ -1,0 +1,70 @@
+<app-main-header></app-main-header>
+<div class="container">
+    <div *ngIf="isPostLoadComplete === false">
+        <div class="p-5 d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isPostLoadComplete === true" >
+        <div class="form-outline mb-4" >
+            <label class="form-label" for="titleId">Заголовок</label>
+            <input [disabled]="isSavingInProgress === true" type="text" id="titleId" [(ngModel)]="title"
+                   class="form-control" required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="anonsId">Аннонс</label>
+            <input [disabled]="isSavingInProgress === true" type="text" id="anonsId" [(ngModel)]="anons"
+                   class="form-control" required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="categoryId">Категория</label>
+            <br/>
+            <select [disabled]="isSavingInProgress === true" class="form-select w-25"
+                    id="categoryId" [(ngModel)]="selectedCategory" (ngModelChange)="onChange($event)">
+                <option *ngFor="let category of categories" [ngValue]="category"> {{category.name}} </option>
+            </select>
+        </div>
+
+        <div class="mb-5" [ngClass]="isSavingInProgress == true ? 'disable' : ''">
+            <angular-editor  class="bg-white" [(ngModel)]="htmlContent" [config]="config">
+                <ng-template #customButtons>
+                    <ae-button style="display: none">
+                    </ae-button>
+                    <div class="angular-editor-toolbar-set">
+                        <label class="angular-editor-button" for="inputTag">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                 width="16" height="16">
+                                <path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
+                            <input style="display: none;" id="inputTag" type="file" accept="image/jpeg,image/png"
+                                   (change)="insertImage($event)" (click)="onInputClick($event)"/>
+                        </label>
+                    </div>
+
+
+                    <div *ngIf="isSavingInProgress === true">
+                        <div class="p-3 d-flex justify-content-center">
+                            <div class="spinner-border me-2" role="status">
+                            </div>
+                            <div class="p-2">Идет процесс сохранения. Пожалуйста подождите</div>
+                        </div>
+                    </div>
+                    <div *ngIf="isSavingInProgress === false">
+                        <div *ngIf="post !== undefined" class="m-3 d-flex justify-content-start">
+                            <button class="btn btn-primary me-2" (click)="save()">Сохранить</button>
+                            <button class="btn btn-primary" (click)="cancel()">Отмена</button>
+                        </div>
+                        <div *ngIf="post === undefined" class="m-3 d-flex justify-content-start">
+                            <button class="btn btn-primary" (click)="addPost()">
+                                Опубликовать
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </angular-editor>
+        </div>
+    </div>
+
+</div>

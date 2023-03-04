@@ -1,0 +1,16 @@
+<app-main-header></app-main-header>
+<div class="">
+    <app-profile-posts-header></app-profile-posts-header>
+    <div *ngIf="isPostsLoadComplete === false">
+        <div class="p-5 d-flex justify-content-center align-content-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isPostsLoadComplete === true">
+        <app-posts-page-component [posts]="profilePosts?.getPost()"
+                                  [restorePostById]="profilePosts?.restorePostById"
+                                  [deletePostById]="profilePosts?.deletePostById">
+        </app-posts-page-component>
+    </div>
+</div>

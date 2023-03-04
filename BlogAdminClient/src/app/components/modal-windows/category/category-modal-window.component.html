@@ -1,0 +1,24 @@
+<div class="p-3">
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">
+            Название категории
+        </h5>
+        <button type="button" class="btn-close" (click)="activeModal.close()"></button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-2">
+                <input type="text" class="form-control" id="categoryName"
+                       name="categoryName"
+                       [(ngModel)]="categoryName"/>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary me-3" (click)="save()">Сохранить</button>
+            <button class="btn btn-secondary" (click)="this.activeModal.close()">Oтмена</button>
+        </div>
+    </div>
+
+</div>

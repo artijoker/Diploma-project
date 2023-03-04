@@ -1,0 +1,13 @@
+<app-main-header></app-main-header>
+<div *ngIf="isPostsLoadComplete === false">
+    <div class="p-5 d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+        </div>
+    </div>
+</div>
+<div *ngIf="isPostsLoadComplete === true">
+    <app-posts [posts]="posts"></app-posts>
+</div>
+
+
+

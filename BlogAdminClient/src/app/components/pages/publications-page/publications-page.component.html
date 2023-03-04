@@ -1,0 +1,29 @@
+<app-main-header></app-main-header>
+<div class="mt-5 me-5 ms-5">
+    <div class="">
+
+        <nav class="nav d-flex me-5 ms-5 justify-content-center">
+            <a [ngClass]="{ 'active' : linkNumber == 0 }" role="button"
+               (click)="getPublishedPosts(); toggle(0)"
+               class="p-2 nav-link link-primary text-dark me-2">
+                Опубликованные
+            </a>
+            <a [ngClass]="{ 'active' : linkNumber == 1 }" role="button"
+               (click)="getPendingPosts(); toggle(1)"
+               class="p-2 nav-link link-primary text-dark me-2">
+                На утверждении
+            </a>
+        </nav>
+    </div>
+</div>
+<div *ngIf="isPostsLoadComplete === false">
+    <div class="p-5 d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+        </div>
+    </div>
+</div>
+<div *ngIf="isPostsLoadComplete === true">
+    <app-posts [posts]="posts"></app-posts>
+</div>
+
+

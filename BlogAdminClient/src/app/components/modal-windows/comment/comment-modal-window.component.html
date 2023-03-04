@@ -1,0 +1,49 @@
+<div class="comment-details-modal-window">
+    <div class="modal-header">
+        <button type="button" class="btn-close" (click)="activeModal.close()"></button>
+    </div>
+    <div class="modal-body">
+
+        <div *ngIf="comment?.isDeleted === true" class="d-flex text-danger justify-content-center">
+            <h3>Комментарий удален</h3>
+        </div>
+        <div class="d-flex p-3">
+            <div class="fw-bold">{{comment?.accountNickname}}</div>
+            <div class="ms-2"> {{comment?.created | date:'dd LLL YYYY в HH:mm'}}</div>
+        </div>
+        <div *ngIf="isEditMode === false">
+            <div class="p-3">
+                <pre>{{comment?.text}}</pre>
+            </div>
+        </div>
+        <div *ngIf="isEditMode === true">
+            <form>
+                <div class="mb-2">
+                    <textarea type="text" class="form-control" id="textComment" name="textComment"
+                              [(ngModel)]="newTextComment"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-start">
+        <div *ngIf="comment?.isDeleted === false">
+            <div *ngIf="isEditMode === false">
+                <div class="">
+                    <button class="btn btn-primary me-3" (click)="editComment()">Редактировать</button>
+                    <button class="btn btn-secondary"
+                            (click)="delete()">
+                        Удалить
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="isEditMode === true">
+                <div class="">
+                    <button class="btn btn-primary me-3" (click)="save()">Сохранить</button>
+                    <button class="btn btn-secondary" (click)="isEditMode = false">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

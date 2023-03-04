@@ -1,0 +1,60 @@
+<div class="modal-dialog-scrollable">
+    <div class="modal-header">
+        <button type="button" class="btn-close" (click)="activeModal.close()"></button>
+    </div>
+    <div class="modal-body">
+        <div *ngIf="isLoadPostComplete === false">
+            <div class="p-5 d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isLoadPostComplete === true">
+            <div *ngIf="post?.isDeleted === true" class="d-flex text-danger justify-content-center">
+                <h3>Пост удален</h3>
+            </div>
+            <div *ngIf="post?.isDeleted === false">
+                <div *ngIf="post?.status !== postStatus.Published && post?.status !== postStatus.InTrash" class="d-flex text-danger justify-content-center mb-3">
+                    <h3>Пост снят с публикации</h3>
+                </div>
+                <div *ngIf="post?.status === postStatus.InTrash"
+                     class="d-flex text-danger justify-content-center mb-3">
+                    <h3>Пост в корзине</h3>
+                </div>
+                <div class="d-flex justify-content-start mb-3">
+                    <button class="btn btn-primary me-3"
+                            (click)="goToPostEditor()">
+                        Редактировать
+                    </button>
+                    <button class="btn btn-primary me-3"
+                            *ngIf="post?.status === postStatus.Published"
+                            (click)="setPostStatusRejected()">
+                        Снят с публикации
+                    </button>
+                    <button class="btn btn-secondary"
+                            *ngIf="post?.status !== postStatus.InTrash"
+                            (click)="postSendToTrash()">
+                        В корзину
+                    </button>
+                </div>
+            </div>
+            <div class="post-meta mb-4">Автор:
+                {{post?.authorNickname}}
+                <br/>{{post?.lastChange | date:'dd LLL YYYY в HH:mm'}}
+            </div>
+            <div class=" mb-4">Категория:
+                <b class="text-success">{{post?.categoryName}}</b>
+            </div>
+            <div class="border bg-white">
+                <div class="mb-3">
+                    <h2 class="post-title mb-1">{{post?.title}}</h2>
+                </div>
+                <div class="fullText me-3 ms-3 mb-5" [innerHTML]="post?.fullText | safeHtml"></div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+    </div>
+
+</div>

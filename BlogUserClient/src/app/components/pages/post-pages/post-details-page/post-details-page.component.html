@@ -1,0 +1,183 @@
+<app-main-header></app-main-header>
+<div class="post me-5 ms-5 mt-2 p-3 shadow post-details">
+
+    <div *ngIf="isPostLoadComplete === false">
+        <div class="p-5 d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isPostLoadComplete === true">
+        <div class=" pe-3 ps-3 pt-4 pb-4">
+
+            <button *ngIf="isAuthorizedUserPost === true" (click)="goToPostEditor()"
+                    class=" btn btn-primary mb-3 me-2">Редактировать
+            </button>
+            <button *ngIf="isAuthorizedUserPost === true && status !== postStatus.Draft" (click)="sendPostToDraft()"
+                    class=" btn btn-primary mb-3 me-2">В черновики
+            </button>
+            <button *ngIf="isAuthorizedUserPost === true && status === postStatus.Draft" (click)="publishPost()"
+                    class=" btn btn-primary mb-3 me-2">
+                Опубликовать
+            </button>
+            <button *ngIf="isAuthorizedUserPost === true" (click)="sendPostToTrash()" class="btn-secondary btn mb-3">
+                В корзину
+            </button>
+
+
+            <div class="d-flex justify-content-between">
+                <div class="post-meta mb-4">Автор:
+                    <a role="button" class="link-primary fw-bold"
+                       (click)="goToPostsByAuthor()">
+                        {{post?.authorNickname}}
+                    </a>
+                    <br/>{{post?.lastChange | date:'dd LLL YYYY в HH:mm'}}
+                </div>
+                <div *ngIf="isAuthorized === true && isAuthorizedUserPost === false && status === postStatus.Published">
+                    <div *ngIf="isSubscribedToAuthor === false">
+                        <button (click)="subscribeToAuthor()" class="btn btn-success mb-3">
+                            Подписаться
+                        </button>
+                    </div>
+                    <div *ngIf="isSubscribedToAuthor === true">
+                        <button (click)="unsubscribeFromAuthor()" class="btn btn-outline-secondary  mb-3">
+                            Отписаться
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class=" mb-4">Категория:
+                <b class="text-success">{{post?.categoryName}}</b>
+            </div>
+
+
+            <div class="border bg-white rounded p-3">
+                <div class="mb-3 mt-2">
+                    <h2 class="post-title mb-1">{{post?.title}}</h2>
+                </div>
+                <div>
+                    <div class="mb-5" [innerHTML]="post?.fullText | safeHtml"></div>
+                </div>
+
+
+                <div *ngIf="isAuthorizedUserPost === false && status === postStatus.Published">
+                    <hr>
+                    <div class="d-flex p-3 align-content-center justify-content-between">
+
+                        <div>
+                            <button (click)="likePost()" [disabled]="isAuthorized === false" type="button"
+                                    title="Нравится"
+                                    class="btn btn-outline-dark like-dislike me-2">
+                                <svg *ngIf="isLike === false" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 512 512"
+                                     width="30" height="30"
+                                     fill="#696969">
+                                    <path
+                                        d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z"/>
+                                </svg>
+                                <svg *ngIf="isLike === true" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 512 512"
+                                     width="30" height="30"
+                                     fill="#10931a">
+                                    <path
+                                        d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z"/>
+                                </svg>
+                                {{post?.likes}}
+                            </button>
+
+                            <button (click)="dislikePost()" [disabled]="isAuthorized === false" type="button"
+                                    title="Не нравится"
+                                    class="btn btn-outline-dark like-dislike">
+                                <svg *ngIf="isDislike === false" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 512 512"
+                                     width="30" height="30"
+                                     fill="#696969">
+                                    <path
+                                        d="M313.4 479.1c26-5.2 42.9-30.5 37.7-56.5l-2.3-11.4c-5.3-26.7-15.1-52.1-28.8-75.2H464c26.5 0 48-21.5 48-48c0-18.5-10.5-34.6-25.9-42.6C497 236.6 504 223.1 504 208c0-23.4-16.8-42.9-38.9-47.1c4.4-7.3 6.9-15.8 6.9-24.9c0-21.3-13.9-39.4-33.1-45.6c.7-3.3 1.1-6.8 1.1-10.4c0-26.5-21.5-48-48-48H294.5c-19 0-37.5 5.6-53.3 16.1L202.7 73.8C176 91.6 160 121.6 160 153.7V192v48 24.9c0 29.2 13.3 56.7 36 75l7.4 5.9c26.5 21.2 44.6 51 51.2 84.2l2.3 11.4c5.2 26 30.5 42.9 56.5 37.7zM32 384H96c17.7 0 32-14.3 32-32V128c0-17.7-14.3-32-32-32H32C14.3 96 0 110.3 0 128V352c0 17.7 14.3 32 32 32z"/>
+                                </svg>
+                                <svg *ngIf="isDislike === true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                     width="30" height="30"
+                                     fill="#be0b0b">
+                                    <path
+                                        d="M313.4 479.1c26-5.2 42.9-30.5 37.7-56.5l-2.3-11.4c-5.3-26.7-15.1-52.1-28.8-75.2H464c26.5 0 48-21.5 48-48c0-18.5-10.5-34.6-25.9-42.6C497 236.6 504 223.1 504 208c0-23.4-16.8-42.9-38.9-47.1c4.4-7.3 6.9-15.8 6.9-24.9c0-21.3-13.9-39.4-33.1-45.6c.7-3.3 1.1-6.8 1.1-10.4c0-26.5-21.5-48-48-48H294.5c-19 0-37.5 5.6-53.3 16.1L202.7 73.8C176 91.6 160 121.6 160 153.7V192v48 24.9c0 29.2 13.3 56.7 36 75l7.4 5.9c26.5 21.2 44.6 51 51.2 84.2l2.3 11.4c5.2 26 30.5 42.9 56.5 37.7zM32 384H96c17.7 0 32-14.3 32-32V128c0-17.7-14.3-32-32-32H32C14.3 96 0 110.3 0 128V352c0 17.7 14.3 32 32 32z"/>
+                                </svg>
+                                {{post?.dislikes}}
+                            </button>
+                        </div>
+
+                        <div *ngIf="isAuthorized === true">
+                            <button type="button" title="Жалоба" class="btn btn-outline-secondary like-dislike"
+                                    (click)="addComplaintOnPost()">
+                                <svg class="me-1" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 512 512"
+                                     width="30" height="30"
+                                     fill="#696969">
+                                    <path
+                                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM161.3 382.1c-5.4 12.3 8.7 21.6 21.1 16.4c22.4-9.5 47.4-14.8 73.7-14.8s51.3 5.3 73.7 14.8c12.4 5.2 26.5-4.1 21.1-16.4c-16-36.6-52.4-62.1-94.8-62.1s-78.8 25.6-94.8 62.1zM176.4 272c17.7 0 32-14.3 32-32c0-1.5-.1-3-.3-4.4l10.9 3.6c8.4 2.8 17.4-1.7 20.2-10.1s-1.7-17.4-10.1-20.2l-96-32c-8.4-2.8-17.4 1.7-20.2 10.1s1.7 17.4 10.1 20.2l30.7 10.2c-5.8 5.8-9.3 13.8-9.3 22.6c0 17.7 14.3 32 32 32zm192-32c0-8.9-3.6-17-9.5-22.8l30.2-10.1c8.4-2.8 12.9-11.9 10.1-20.2s-11.9-12.9-20.2-10.1l-96 32c-8.4 2.8-12.9 11.9-10.1 20.2s11.9 12.9 20.2 10.1l11.7-3.9c-.2 1.5-.3 3.1-.3 4.7c0 17.7 14.3 32 32 32s32-14.3 32-32z"/>
+                                </svg>
+                                Жалоба
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3" *ngIf="status === postStatus.Published">
+                <h4>Комментарии: {{comments.length}}</h4>
+                <div>
+                    <div *ngIf="isCommentsLoadComplete === false">
+                        <div class="p-5 d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="isCommentsLoadComplete === true">
+                        <div *ngIf="comments.length > 0">
+
+                            <div class="card">
+                                <div *ngFor="let comment of comments">
+                                    <app-comment [comment]="comment"
+                                                 (edit)="editComment($event, comment.id)"
+                                                 (delete)="deleteComment(comment.id)"
+                                                 (complaint)="addComplaintOnComment($event, comment.id)">
+                                    </app-comment>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="comments.length === 0" class="d-flex justify-content-center h7">
+                            Здесь пока нет ни одного комментария, вы можете стать первым!
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button (click)="reloadComments()" class=" btn btn-primary mt-2 pe-5 ps-5">
+                        Обновить комментарии
+                    </button>
+                </div>
+                <div *ngIf="isAuthorized == true">
+                    <form>
+                        <h6>Новый комментарий</h6>
+
+                        <div class="form-group">
+                                <textarea class="form-control"
+                                          placeholder="Ваш комментарий"
+                                          id="titleId" [(ngModel)]="textComment"
+                                          name="textComment"></textarea>
+                        </div>
+                        <div>
+                            <button (click)="addComment()"
+                                    class=" btn btn-success mt-3 mb-5 pe-5 ps-5">
+                                Отправить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

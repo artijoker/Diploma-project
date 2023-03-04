@@ -1,0 +1,51 @@
+<div *ngIf="posts !== undefined">
+    <div *ngIf="posts.length > 0">
+        <div class="d-flex justify-content-center">
+            <div class="w-75">
+                <div *ngFor="let post of posts">
+                    <div class="border-dark border bg-light p-3 rounded m-5 d-flex">
+                        <div style="border-right: 1px solid rgba(0,0,0,0.34)" class="d-flex pe-2 flex-column me-3 ">
+                            <button *ngIf="goToPost !== undefined" (click)="goToPost(post.id)"
+                                    class="btn btn-primary m-2">
+                                Читать
+                            </button>
+                            <button *ngIf="editPost !== undefined" (click)="editPost(post.id)"
+                                    class="btn btn-primary m-2">
+                                Редактировать
+                            </button>
+                            <button *ngIf="sendPostToDraft !== undefined" (click)="sendPostToDraft(post.id)"
+                                    class="btn btn-primary m-2">
+                                В черновики
+                            </button>
+                            <button *ngIf="publishPost !== undefined" (click)="publishPost(post.id)"
+                                    class="btn btn-primary m-2">
+                                Опубликовать
+                            </button>
+                            <button *ngIf="sendPostToTrash !== undefined" (click)="sendPostToTrash(post.id)"
+                                    class="btn btn-primary m-2">
+                                В корзину
+                            </button>
+                            <button *ngIf="restorePostById !== undefined" (click)="restorePostById(post.id)"
+                                    class="btn btn-primary m-2">
+                                Восстановить
+                            </button>
+                            <button *ngIf="deletePostById !== undefined" (click)="deletePostById(post.id)"
+                                    class="btn btn-primary m-2">
+                                Удалить
+                            </button>
+                        </div>
+                        <div>
+                            <strong class="d-inline-block mb-2 text-primary">{{post?.categoryName}}</strong>
+                            <h4>{{post?.title}}</h4>
+                            <p>{{post?.anons}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="posts.length === 0" class="d-flex justify-content-center h4 mt-5">
+        Нет постов
+    </div>
+</div>
+

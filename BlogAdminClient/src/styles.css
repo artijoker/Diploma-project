@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    background-color: whitesmoke;
+
+}
+
+table {
+    font-size: 13px;
+}
+
+.my-shadow {
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .55) !important;
+}
+
+.my-shadow:hover {
+    box-shadow: 0 .1rem 0.5rem rgba(0, 0, 0, .15) !important;
+}
+
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.scroll-overflow {
+    overflow: scroll;
+}
+
+.ellipsis {
+    position: relative;
+}
+
+.ellipsis:before {
+    content: '&nbsp;';
+    visibility: hidden;
+}
+
+.ellipsis span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+tbody tr:hover {
+    background-color: #d9d9d9;
+}
+
+.angular-editor-toolbar-set {
+    margin: 2px !important;
+}
+
+
+.angular-editor-toolbar {
+    font-size: 1.0rem !important;
+    padding-top: 7px !important;
+    padding-bottom: 2px !important;
+}
+
+.ae-font.ae-picker {
+    padding: 3px !important;
+}
+
+.angular-editor-textarea {
+    caret-color: #e58100 !important;
+}
+
+

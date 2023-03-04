@@ -1,0 +1,43 @@
+<app-main-header></app-main-header>
+<app-profile-header></app-profile-header>
+<div class="ms-5">
+    <div>
+        <div *ngIf="isCommentsLoadComplete === false">
+            <div class="p-5 d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isCommentsLoadComplete === true">
+            <div *ngIf="comments.length > 0">
+                <h5 class="mt-3 mb-3 ms-2">Ваши комментарии</h5>
+                <div *ngFor="let comment of comments">
+                    <div style="border: 1px solid black" class="rounded p-3 w-50 mb-2">
+                        <div class="p-3 ">
+                            <h5 class="pb-3 border-dark border-bottom">{{comment.postTitle}}</h5>
+                            <div class="mb-2 text-primary fw-bold">
+                                Вы писали {{comment.created | date:'dd LLL YYYY в HH:mm'}}</div>
+                            <pre>{{comment.text}}</pre>
+                            <div class="d-flex justify-content-end pe-3">
+                                <a role="button" (click)="editComment(comment)" class="p-2 nav-link link-primary text-dark  me-2">
+                                    Редактировать
+                                </a>
+                                <a role="button" (click)="deleteComment(comment)" class="p-2 nav-link link-primary text-dark  me-2">
+                                    Удалить
+                                </a>
+                            </div>
+                            <button (click)="goToPost(comment.postId)"
+                                    class="btn-lg btn btn-primary mt-3" type="submit">
+                                Посмотреть пост
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="comments.length === 0" class="d-flex mt-5 justify-content-center h6">
+                Вы не разместил ни одного комментария
+            </div>
+        </div>
+    </div>
+</div>
+
