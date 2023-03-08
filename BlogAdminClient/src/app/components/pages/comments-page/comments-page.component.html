@@ -7,41 +7,47 @@
         </div>
     </div>
     <div *ngIf="isCommentsLoadComplete === true">
-        <table class="table table-striped border-dark border" style="vertical-align: middle">
-            <thead class="table-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th (click)="sortAuthor()" class="link-primary text-white" scope="col" role="button">Автор</th>
-                <th (click)="sortComment()" class="link-primary text-white" scope="col" role="button">Комментарий</th>
-                <th (click)="sortPostTitle()" class="link-primary text-white" scope="col" role="button">Пост</th>
-                <th (click)="sortDate()" class="link-primary text-white" scope="col" role="button">
-                    Создан
-                </th>
-                <th class="link-primary text-white" scope="col" role="button" (click)="sortIsDelete()">Удален</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr title="Открыть комментарий" (click)="openComment(comment)" class="border-dark" role="button"
-                *ngFor="let comment of comments;index as i">
-                <th scope="row">{{i + 1}}</th>
-                <td>{{comment.accountNickname}}</td>
-                <td><pre class="mb-0" style="font-size: 14px">{{comment.text}}</pre>
-                <td>{{comment.postTitle}}
-                    <br/>
-                    <div class="d-flex justify-content-start">
-                        <a (click)="$event.stopPropagation(); openPost(comment.postId)"
-                           class="mt-1 nav-link open-post text-primary">
-                            Посмотреть пост
-                        </a>
-                    </div>
+        <div *ngIf="comments.length === 0" class="d-flex justify-content-center h4">
+            Нет комментариев
+        </div>
+        <div  *ngIf="comments.length > 0" >
+            <table class="table table-striped border-dark border" style="vertical-align: middle">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th (click)="sortAuthor()" class="link-primary text-white" scope="col" role="button">Автор</th>
+                    <th (click)="sortComment()" class="link-primary text-white" scope="col" role="button">Комментарий</th>
+                    <th (click)="sortPostTitle()" class="link-primary text-white" scope="col" role="button">Пост</th>
+                    <th (click)="sortDate()" class="link-primary text-white" scope="col" role="button">
+                        Создан
+                    </th>
+                    <th class="link-primary text-white" scope="col" role="button" (click)="sortIsDelete()">Удален</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr title="Открыть комментарий" (click)="openComment(comment)" class="border-dark" role="button"
+                    *ngFor="let comment of comments;index as i">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{comment.accountNickname}}</td>
+                    <td><pre class="mb-0" style="font-size: 14px">{{comment.text}}</pre>
+                    <td>{{comment.postTitle}}
+                        <br/>
+                        <div class="d-flex justify-content-start">
+                            <a (click)="$event.stopPropagation(); openPost(comment.postId)"
+                               class="mt-1 nav-link open-post text-primary">
+                                Посмотреть пост
+                            </a>
+                        </div>
 
-                </td>
-                <td>{{comment.created | date:'dd.MM.yyyy в HH:mm'}}</td>
-                <td>{{comment.isDeleted === true ? 'Да' : 'Нет'}}</td>
-            </tr>
-            <tr>
-            </tbody>
-        </table>
+                    </td>
+                    <td>{{comment.created | date:'dd.MM.yyyy в HH:mm'}}</td>
+                    <td>{{comment.isDeleted === true ? 'Да' : 'Нет'}}</td>
+                </tr>
+                <tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 
