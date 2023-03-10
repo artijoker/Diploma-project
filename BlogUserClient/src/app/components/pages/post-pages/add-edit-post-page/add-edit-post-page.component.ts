@@ -101,13 +101,13 @@ export class AddEditPostPageComponent implements OnInit {
     }
 
     tab(event: KeyboardEvent){
-        if (event.key === "Tab"){
-            document.execCommand('indent');
-            let editor = document.getElementById("editor");
-            console.dir(editor);
-            if (editor !== null)
-                editor.focus();
-        }
+        // if (event.key === "Tab"){
+        //     document.execCommand('indent');
+        //     let editor = document.getElementById("editor");
+        //     console.dir(editor);
+        //     if (editor !== null)
+        //         editor.focus();
+        // }
 
     }
 
