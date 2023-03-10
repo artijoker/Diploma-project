@@ -193,7 +193,9 @@ export class AddEditPostPageComponent implements OnInit {
                     .subscribe(response => {
                         if (response.succeeded) {
                             alert("Пост сохранен");
-                            this._location.back();
+                            this._router.navigate(
+                                ['post', this.post?.id]
+                            );
                         } else {
                             alert(response.message);
                         }
@@ -221,7 +223,7 @@ export class AddEditPostPageComponent implements OnInit {
                     if (response.succeeded) {
                         alert("Пост сохранен в черновиках");
                         this._router.navigate(
-                            ['/blog']
+                            ['my-posts/draft-posts']
                         );
                     } else {
                         alert(response.message);
@@ -243,8 +245,8 @@ export class AddEditPostPageComponent implements OnInit {
                 .subscribe(response => {
                     if (response.succeeded) {
                         alert("Пост сохранен и отправлена на проверку модераторам");
-                        this._router.navigate(
-                            ['/blog']
+                       this._router.navigate(
+                            ['my-posts/pending-posts']
                         );
                     } else {
                         alert(response.message);
