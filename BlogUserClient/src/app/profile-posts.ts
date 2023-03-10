@@ -80,7 +80,7 @@ export class ProfilePosts{
 
     deletePostById(postId: number){
         let result = confirm(
-            "Внимание пост будет удален и вы не сможете его восстонавить. " +
+            "Внимание пост будет удален и вы не сможете его восстановить. " +
             "Продолжить выпонение операции?");
         if(result)
             this._postService.removePost(postId)
