@@ -45,7 +45,7 @@ namespace CorporateBlog.WebApi.Filters
                     });
                 _logger.LogError(context.Exception, "UNKNOWN BUG!!! An urgent decision is required.");
             }
-
+            context.ExceptionHandled = true;
 
         }
 
