@@ -65,7 +65,7 @@ namespace CorporateBlog.Infrastructure.Data
             });
             modelBuilder.Entity<BlockedJwtToken>(entity =>
             {
-                entity.ToTable("BlockeDtokens");
+                entity.ToTable("BlockedTokens");
             });
         }
 
